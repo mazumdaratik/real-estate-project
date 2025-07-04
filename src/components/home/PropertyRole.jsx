@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { IoKeyOutline } from "react-icons/io5";
 import { GoPeople } from "react-icons/go";
 import { MdOutlineApartment } from "react-icons/md";
 
-const PropertyRole = () => {
+    const PropertyRole = ({selectPropertyRole, setSelectPropertyRole}) => {
 
-    const[selectPropertyRoll, setSelectPropertyRoll] = useState(null)
 
     const propertyRoleData = [
         {
@@ -37,7 +36,11 @@ const PropertyRole = () => {
         <div className='flex justify-between bg-white m-4'>
             {
                 propertyRoleData.map( data => 
-                <div key={data.id} className='flex justify-center items-center gap-4 p-4 border border-gray-200 m-2 rounded-sm'>
+                <div 
+                key={data.id} 
+                onClick={ () => setSelectPropertyRole(data.id)}
+                className={`w-100 flex justify-center items-center gap-4 p-4 border m-2 rounded-2xl cursor-pointer transition all
+                    ${selectPropertyRole === data.id ? 'border-blue-600': 'border-gray-200'}`}>
                     <div>{data.icon}</div>
                     <div>
                         <h3 className='text-lg font-semibold'>{data.title}</h3>

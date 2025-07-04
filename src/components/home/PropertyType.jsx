@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FaHouseChimney } from "react-icons/fa6";
 import { BsBuildingsFill } from "react-icons/bs";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 
-const PropertyType = () => {
-
-    const[selectProperty, setSelectProperty] = useState(null)
+const PropertyType = ({selectPropertyType, setSelectPropertyType}) => {
 
     const propertyData = [
         {
@@ -33,11 +31,15 @@ const PropertyType = () => {
 
   return (
     <div>
-        <h3 className='text-xl font-semibold ml-6 mt-2'>Propert Type</h3>
+        <h3 className='text-xl font-semibold ml-6 mt-2'>Property Type</h3>
         <div className='flex justify-between bg-white m-4'>
             {
                 propertyData.map( data => 
-                <div key={data.id} className='flex justify-center items-center gap-4 p-4 border border-gray-200 m-2 rounded-sm cursor-pointer'>
+                <div 
+                key={data.id} 
+                onClick={() => setSelectPropertyType(data.id)}
+                className={`w-100 flex justify-center items-center gap-4 p-4 m-2 border rounded-2xl cursor-pointer transition-all
+                ${selectPropertyType === data.id ? 'border-blue-500' : 'border-gray-200'}`}>
                     <div>{data.icon}</div>
                     <div>
                         <h3 className='text-lg font-semibold'>{data.title}</h3>
