@@ -11,7 +11,7 @@ const fieldData = [
   { label: "Rent frequency & payment reminder", required: true },
   { label: "Application agreement", optional: true },
   { label: "About the property", optional: true },
-  { label: "Community’s amenity/features", optional: true, recommended: true },
+  { label: "Community's amenity/features", optional: true, recommended: true },
   { label: "Nearest stations", optional: true, recommended: true },
   { label: "Nearest landmark", optional: true, recommended: true },
   { label: "Utilities provider", optional: true, recommended: true },
@@ -19,15 +19,23 @@ const fieldData = [
 
 const Form = ({ 
       onOpenPropertyModal, onOpenLeasingModal, 
-      onOpenChargesModal, propertyData , 
-      leasingData, chargesData}) => {
+      onOpenChargesModal, onOpenPetFeesModal,
+      propertyData, leasingData, chargesData, petFeesData
+    }) => {
 
   return (
         <div className="grid grid-cols-1 md:grid-cols-2">
         {
           fieldData.map( (field, index) => {
             const isProperty = field.label === "Property address";
+            const isPetFees = field.label === "Pet fees";
+            const isLeasing = field.label === "Leasing info";
+            const isCharges = field.label === "Charges";
+            
             const hasProperty = isProperty && propertyData;
+            const hasPetFees = isPetFees && petFeesData;
+            const hasLeasing = isLeasing && leasingData;
+            const hasCharges = isCharges && chargesData;
 
             return (
               <div key={index}
@@ -58,20 +66,24 @@ const Form = ({
                         </div>  
                       )}
 
-                      {
-                        field.label === "Leasing info" && leasingData && (
-                          <div className="border-t border-gray-300 p-2">
-                            <p><strong>Manager: </strong> {leasingData.leasingManager} <strong>Phone: </strong> {leasingData.managerPhone} <strong>Email: </strong> {leasingData.managerEmail}</p>
-                          </div>
-                        )
-                      }
-                      {
-                        field.label === "Charges" && chargesData && (
-                          <div className="border-t border-gray-300 p-2">
-                            <p><strong> Application Fee: </strong> {chargesData.applicationFee} <strong>Type: </strong> {chargesData.applicantType} <strong>Admin Fee: </strong>{chargesData.adminFee}</p>
-                          </div>
-                        )
-                      }
+                      {hasPetFees && (
+                        <div className="border-t border-gray-300 p-2">
+                          <p><strong>Pet Type: </strong> {petFeesData.petType} <strong>Weight: </strong> {petFeesData.weight}lb <strong>Pet Fee: </strong> ${petFeesData.petFee}</p>
+                          <p><strong>Security Deposit: </strong> ${petFeesData.securityFee} <strong>Monthly Rent: </strong> ${petFeesData.monthlyRent}</p>
+                        </div>
+                      )}
+
+                      {hasLeasing && (
+                        <div className="border-t border-gray-300 p-2">
+                          <p><strong>Manager: </strong> {leasingData.leasingManager} <strong>Phone: </strong> {leasingData.managerPhone} <strong>Email: </strong> {leasingData.managerEmail}</p>
+                        </div>
+                      )}
+                      
+                      {hasCharges && (
+                        <div className="border-t border-gray-300 p-2">
+                          <p><strong> Application Fee: </strong> {chargesData.applicationFee} <strong>Type: </strong> {chargesData.applicantType} <strong>Admin Fee: </strong>{chargesData.adminFee}</p>
+                        </div>
+                      )}
                        
                   </div>
 
@@ -79,17 +91,16 @@ const Form = ({
                     onClick={() => {
                       if (field.label === "Property address") {
                         onOpenPropertyModal();
-                        } else if (field.label === "Leasing info") {
-                          onOpenLeasingModal();
-                        } else if (field.label === "Charges") {
-                          onOpenChargesModal();
-                        }
+                      } else if (field.label === "Pet fees") {
+                        onOpenPetFeesModal();
+                      } else if (field.label === "Leasing info") {
+                        onOpenLeasingModal();
+                      } else if (field.label === "Charges") {
+                        onOpenChargesModal();
                       }
-                    }
+                    }}
                   >
-                    {hasProperty
-                     || field.label === "Leasing info" && leasingData
-                     || field.label === "Charges" && chargesData ? (
+                    {hasProperty || hasPetFees || hasLeasing || hasCharges ? (
                         <>
                           <BiSolidEdit className="text-base" />
                           <span>Edit</span>
@@ -103,7 +114,6 @@ const Form = ({
                   </button>
             </div>
           )
-
             
           } )
         }
