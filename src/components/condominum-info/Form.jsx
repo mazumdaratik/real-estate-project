@@ -19,8 +19,8 @@ const fieldData = [
 
 const Form = ({ 
       onOpenPropertyModal, onOpenLeasingModal, 
-      onOpenChargesModal, onOpenPetFeesModal,
-      propertyData, leasingData, chargesData, petFeesData
+      onOpenChargesModal, onOpenPetFeesModal, onOpenParkingModal,
+      propertyData, leasingData, chargesData, petFeesData, parkingData,
     }) => {
 
   return (
@@ -31,11 +31,13 @@ const Form = ({
             const isPetFees = field.label === "Pet fees";
             const isLeasing = field.label === "Leasing info";
             const isCharges = field.label === "Charges";
+            const isParking = field.label === "Parking";
             
             const hasProperty = isProperty && propertyData;
             const hasPetFees = isPetFees && petFeesData;
             const hasLeasing = isLeasing && leasingData;
             const hasCharges = isCharges && chargesData;
+            const hasParking = isParking && parkingData;
 
             return (
               <div key={index}
@@ -84,6 +86,14 @@ const Form = ({
                           <p><strong> Application Fee: </strong> {chargesData.applicationFee} <strong>Type: </strong> {chargesData.applicantType} <strong>Admin Fee: </strong>{chargesData.adminFee}</p>
                         </div>
                       )}
+
+                      {hasParking && (
+                        <div className="border-t border-gray-300 p-2">
+                          <p><strong>Parking Time: </strong> {parkingData.parkingTime} <strong>Parking overview: </strong> {parkingData.overview}</p>
+                        </div>
+                      )
+
+                      }
                        
                   </div>
 
@@ -97,10 +107,12 @@ const Form = ({
                         onOpenLeasingModal();
                       } else if (field.label === "Charges") {
                         onOpenChargesModal();
+                      } else if (field.label === "Parking") {
+                        onOpenParkingModal();
                       }
                     }}
                   >
-                    {hasProperty || hasPetFees || hasLeasing || hasCharges ? (
+                    {hasProperty || hasPetFees || hasLeasing || hasCharges || hasParking ? (
                         <>
                           <BiSolidEdit className="text-base" />
                           <span>Edit</span>
