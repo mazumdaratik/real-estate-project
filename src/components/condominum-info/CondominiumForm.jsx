@@ -6,17 +6,20 @@ import PropertyAddress from "./modals/PropertyAddress";
 import LeasingInfo from "./modals/LeasingInfo";
 import Charges from "./modals/Charges";
 import PetFees from "./modals/PetFees";
+import Parking from "./modals/Parking";
 
 const CondominiumForm = () => {
   const [propertyData, setPropertyData] = useState(null);
   const [leasingData, setLeasingData] = useState(null);
   const [chargesData, setChargesData] = useState(null);
   const [petFeesData, setPetFeesData] = useState(null);
+  const [parkingData, setParkingData] = useState(null);
  
   const [showPropertyModal, setShowPropertyModal] = useState(false);
   const [showLeasingModal, setShowLeasingModal] = useState(false);
   const [showChargesModal, setShowChargesModal] = useState(false);
   const [showPetFeesModal, setShowPetFeesModal] = useState(false);
+  const [showParkingModal, setShowParkingModal] = useState(false);
 
   const handleOpenPropertyModal = () => setShowPropertyModal(true);
   const handleClosePropertyModal = () => setShowPropertyModal(false);
@@ -29,6 +32,11 @@ const CondominiumForm = () => {
 
   const handleOpenPetFeesModal = () => setShowPetFeesModal(true);
   const handleClosePetFeesModal = () => setShowPetFeesModal(false);
+
+  const handleOpenParkingModal = () => setShowParkingModal(true);
+  const handleCloseParkingModal = () => setShowParkingModal(false);
+
+
 
   const handleSubmitProperty = (data) => {
     setPropertyData(data);
@@ -54,6 +62,14 @@ const CondominiumForm = () => {
     handleClosePetFeesModal();
   };
 
+  const handleSubmitParking = (data) => {
+    console.log("Parking data", data)
+    setParkingData(data)
+    handleCloseParkingModal();
+  }
+
+
+
   return (
     <div className="p-6 bg-white rounded-md shadow-sm">
       <h2 className="text-xl font-semibold px-5 mb-6">Condominiums Information</h2>
@@ -62,10 +78,13 @@ const CondominiumForm = () => {
         onOpenLeasingModal={handleOpenLeasingModal}
         onOpenChargesModal={handleOpenChargesModal}
         onOpenPetFeesModal={handleOpenPetFeesModal}
+        onOpenParkingModal={handleOpenParkingModal}
         propertyData={propertyData}
         leasingData={leasingData}
         chargesData={chargesData}
         petFeesData={petFeesData}
+        parkingData={parkingData}
+
       />
       <PhotoUpload />
       <UploadVideos />
@@ -97,6 +116,14 @@ const CondominiumForm = () => {
           onSubmit={handleSubmitPetFees}
         />
       )}
+
+      {showParkingModal && (
+        <Parking 
+        onClose={handleCloseParkingModal}
+        onSubmit={handleSubmitParking}
+        />
+      )
+      }
     </div>
   );
 };
