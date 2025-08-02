@@ -7,6 +7,7 @@ import LeasingInfo from "./modals/LeasingInfo";
 import Charges from "./modals/Charges";
 import PetFees from "./modals/PetFees";
 import Parking from "./modals/Parking";
+import RentFrequency from "./modals/RentFrequency";
 
 const CondominiumForm = () => {
   const [propertyData, setPropertyData] = useState(null);
@@ -14,12 +15,14 @@ const CondominiumForm = () => {
   const [chargesData, setChargesData] = useState(null);
   const [petFeesData, setPetFeesData] = useState(null);
   const [parkingData, setParkingData] = useState(null);
+  const [rentFrequencyData, setRentFrequencyData] = useState(null)
  
   const [showPropertyModal, setShowPropertyModal] = useState(false);
   const [showLeasingModal, setShowLeasingModal] = useState(false);
   const [showChargesModal, setShowChargesModal] = useState(false);
   const [showPetFeesModal, setShowPetFeesModal] = useState(false);
   const [showParkingModal, setShowParkingModal] = useState(false);
+  const [showRentFrequencyModal, setShowRentFrequencyModal] = useState(false);
 
   const handleOpenPropertyModal = () => setShowPropertyModal(true);
   const handleClosePropertyModal = () => setShowPropertyModal(false);
@@ -35,6 +38,9 @@ const CondominiumForm = () => {
 
   const handleOpenParkingModal = () => setShowParkingModal(true);
   const handleCloseParkingModal = () => setShowParkingModal(false);
+
+  const handleOpenRentFrequencyModal = () => setShowRentFrequencyModal(true);
+  const handleCloseRentFrequencyModal = () => setShowRentFrequencyModal(false);
 
 
 
@@ -68,6 +74,12 @@ const CondominiumForm = () => {
     handleCloseParkingModal();
   }
 
+  const handleSubmitRentFrequency = (data) => {
+    console.log("Frequency data", data)
+    setRentFrequencyData(data)
+    handleCloseRentFrequencyModal();
+  }
+
 
 
   return (
@@ -79,11 +91,13 @@ const CondominiumForm = () => {
         onOpenChargesModal={handleOpenChargesModal}
         onOpenPetFeesModal={handleOpenPetFeesModal}
         onOpenParkingModal={handleOpenParkingModal}
+        onOpenRentFrequencyModal={handleOpenRentFrequencyModal}
         propertyData={propertyData}
         leasingData={leasingData}
         chargesData={chargesData}
         petFeesData={petFeesData}
         parkingData={parkingData}
+        rentFrequencyData= {rentFrequencyData}
 
       />
       <PhotoUpload />
@@ -121,6 +135,14 @@ const CondominiumForm = () => {
         <Parking 
         onClose={handleCloseParkingModal}
         onSubmit={handleSubmitParking}
+        />
+      )
+      }
+
+      {showRentFrequencyModal && (
+        <RentFrequency 
+        onClose={handleCloseRentFrequencyModal}
+        onSubmit={handleSubmitRentFrequency}
         />
       )
       }
