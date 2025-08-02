@@ -19,8 +19,8 @@ const fieldData = [
 
 const Form = ({ 
       onOpenPropertyModal, onOpenLeasingModal, 
-      onOpenChargesModal, onOpenPetFeesModal, onOpenParkingModal,
-      propertyData, leasingData, chargesData, petFeesData, parkingData,
+      onOpenChargesModal, onOpenPetFeesModal, onOpenParkingModal,onOpenRentFrequencyModal,
+      propertyData, leasingData, chargesData, petFeesData, parkingData,rentFrequencyData
     }) => {
 
   return (
@@ -32,12 +32,14 @@ const Form = ({
             const isLeasing = field.label === "Leasing info";
             const isCharges = field.label === "Charges";
             const isParking = field.label === "Parking";
+            const isRentFrequency = field.label === "Rent frequency & payment reminder";
             
             const hasProperty = isProperty && propertyData;
             const hasPetFees = isPetFees && petFeesData;
             const hasLeasing = isLeasing && leasingData;
             const hasCharges = isCharges && chargesData;
             const hasParking = isParking && parkingData;
+            const hasRentFrequency = isRentFrequency && rentFrequencyData
 
             return (
               <div key={index}
@@ -91,9 +93,14 @@ const Form = ({
                         <div className="border-t border-gray-300 p-2">
                           <p><strong>Parking Time: </strong> {parkingData.parkingTime} <strong>Parking overview: </strong> {parkingData.overview}</p>
                         </div>
-                      )
+                      )}
 
-                      }
+                      {hasRentFrequency && (
+                        <div className="border-t border-gray-300 p-2">
+                          <p><strong>Rent payment frequency: </strong> {rentFrequencyData.paymentMonth} <strong>Rent reminder: </strong> {rentFrequencyData.rentReminder}</p>
+                          <p><strong>Due date:</strong> {rentFrequencyData.rentDue}</p>
+                        </div>
+                      )}
                        
                   </div>
 
@@ -109,10 +116,12 @@ const Form = ({
                         onOpenChargesModal();
                       } else if (field.label === "Parking") {
                         onOpenParkingModal();
+                      } else if (field.label === "Rent frequency & payment reminder") {
+                        onOpenRentFrequencyModal();
                       }
                     }}
                   >
-                    {hasProperty || hasPetFees || hasLeasing || hasCharges || hasParking ? (
+                    {hasProperty || hasPetFees || hasLeasing || hasCharges || hasParking || hasRentFrequency ? (
                         <>
                           <BiSolidEdit className="text-base" />
                           <span>Edit</span>
