@@ -178,7 +178,7 @@ const PetFees = ({ onClose, onSubmit }) => {
                     {/* Footer */}
                     <div className="pt-4 border-t border-gray-300 flex items-center justify-between">
                         <p className="text-sm font-semibold text-gray-800">
-                            ❕ Type 0 if pet fees not applicable
+                            ❕Type 0 if pet fees not applicable
                         </p>
                         <button 
                             type="submit" 
