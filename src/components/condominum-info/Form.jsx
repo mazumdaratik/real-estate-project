@@ -18,9 +18,9 @@ const fieldData = [
 ];
 
 const Form = ({ 
-      onOpenPropertyModal, onOpenLeasingModal, 
-      onOpenChargesModal, onOpenPetFeesModal, onOpenParkingModal,onOpenRentFrequencyModal,
-      propertyData, leasingData, chargesData, petFeesData, parkingData,rentFrequencyData
+      onOpenPropertyModal, onOpenLeasingModal, onOpenChargesModal, 
+      onOpenPetFeesModal, onOpenParkingModal,onOpenRentFrequencyModal,onOpenAboutPropertyModal,
+      propertyData, leasingData, chargesData, petFeesData, parkingData,rentFrequencyData, aboutPropertyData,
     }) => {
 
   return (
@@ -33,6 +33,7 @@ const Form = ({
             const isCharges = field.label === "Charges";
             const isParking = field.label === "Parking";
             const isRentFrequency = field.label === "Rent frequency & payment reminder";
+            const isAboutProperty = field.label === "About the property"
             
             const hasProperty = isProperty && propertyData;
             const hasPetFees = isPetFees && petFeesData;
@@ -40,6 +41,7 @@ const Form = ({
             const hasCharges = isCharges && chargesData;
             const hasParking = isParking && parkingData;
             const hasRentFrequency = isRentFrequency && rentFrequencyData
+            const hasAboutProperty = isAboutProperty && aboutPropertyData
 
             return (
               <div key={index}
@@ -101,6 +103,10 @@ const Form = ({
                           <p><strong>Due date:</strong> {rentFrequencyData.rentDue}</p>
                         </div>
                       )}
+
+                      {hasAboutProperty && (
+                        <p className="border-t border-gray-300 p-2">{aboutPropertyData.message}</p>
+                      )}
                        
                   </div>
 
@@ -118,10 +124,12 @@ const Form = ({
                         onOpenParkingModal();
                       } else if (field.label === "Rent frequency & payment reminder") {
                         onOpenRentFrequencyModal();
+                      } else if (field.label === "About the property") {
+                        onOpenAboutPropertyModal();
                       }
                     }}
                   >
-                    {hasProperty || hasPetFees || hasLeasing || hasCharges || hasParking || hasRentFrequency ? (
+                    {hasProperty || hasPetFees || hasLeasing || hasCharges || hasParking || hasRentFrequency || hasAboutProperty ? (
                         <>
                           <BiSolidEdit className="text-base" />
                           <span>Edit</span>
